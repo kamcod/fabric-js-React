@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Canvas from "./components/Canvas";
+import SideBar from "./components/SideBar";
+
+import { useState } from "react";
 
 function App() {
+  const [rect, setRect] = useState(false);
+  const [circle, setCircle] = useState(false);
+  const addRect = () => {
+    console.log("setting true");
+    setRect(true);
+  };
+  const addCircle = () => {
+    console.log("setting true");
+    setCircle(true);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="sidebar">
+        <SideBar addRect={addRect} addCircle={addCircle} />
+      </div>
+      <div className="canvas-view">
+        <Canvas rect={rect} circle={circle} />
+      </div>
     </div>
   );
 }
