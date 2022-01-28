@@ -1,8 +1,24 @@
 .App {
   text-align: center;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
-.sidebar{
+.canvas-view{
+  width: 60%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+}
+.leftpanel{
+  width: 19%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: block;
+}
+.rightpanel{
+  width: 19%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
   display: block;
 }
 button{
