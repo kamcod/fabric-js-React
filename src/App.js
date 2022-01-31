@@ -8,7 +8,12 @@ import RightPanel from "./components/RightPanel";
 
 function App() {
   const [canvas, setCanvas] = useState('');
+  const [text, setText] = useState('');
+  const [dimensions, setDimensions] = useState('');
   
+  useEffect(() => {
+    console.log("active changed");
+  }, [canvas.getActiveObject]);
   useEffect(() => {
     setCanvas(initCanvas('canvas'));
   }, []);
@@ -28,6 +33,8 @@ function App() {
         height: 80,
         fill: 'green'
       });
+      const dim = {width: rect.width, height: rect.height, radius: ''};
+      setDimensions(dim);
       canvas.add(rect);
       canvas.renderAll();
  
@@ -41,6 +48,8 @@ function App() {
         left: 120,
          top: 120
       });
+      const dim = {height: '', width: '', radius: circle.radius};
+      setDimensions(dim);
       canvas.add(circle);
       canvas.renderAll();
   };
@@ -52,6 +61,8 @@ function App() {
         left: 70, 
         top: 70
       });
+      const dim = {width: tri.width, height: tri.height, radius: ''};
+      setDimensions(dim);
       canvas.add(tri);
       canvas.renderAll();
   };
@@ -71,6 +82,7 @@ const changeDimensions = (value) => {
   aObj.set('width', parseFloat(value.width));
   if(value.height){aObj.set('height', parseFloat(value.height));}
   if(value.radius){aObj.set('radius', parseFloat(value.radius));}
+  setDimensions(value);
   canvas.renderAll();
 }
 const addImage = () => {
@@ -85,8 +97,30 @@ const addImg = (url) => {
   fabric.Image.fromURL(url, img => {
     img.scale(0.5).set('flipX', true);
     canvas.add(img);
+    canvas.setActiveObject(img);
   });
   canvas.renderAll();
+};
+
+const addText = () => {
+  const text = new fabric.Text('Hello World', {top: 150, left: 150});
+  canvas.add(text);
+  canvas.setActiveObject(text);
+  //console.log(text.text);
+  setText(text);
+  const dim = {width: text.width, height: text.height, radius: ''};
+  setDimensions(dim);
+  
+  canvas.renderAll();
+};
+const changeText = (value) => {
+  //console.log(text);
+text.text = value;
+canvas.renderAll();
+};
+
+const addSvg = () => {
+
 };
 
 const clearCanvas =()=>{
@@ -104,6 +138,8 @@ const clearCanvas =()=>{
         addTriangle={addTriangle}
         addImage={addImage}
         addImg={addImg}
+        addText={addText}
+        addSvg={addSvg}
         clearCanvas={clearCanvas}
         />
         
@@ -113,8 +149,12 @@ const clearCanvas =()=>{
       </div>
       <div className="rightpanel">
         <RightPanel
+        canvas={canvas}
         changeColor={changeColor}
         changeDimensions={changeDimensions}
+        dimensions = {dimensions}
+        text={text.text}
+        changeText={changeText}
         />
       </div>
     </div>

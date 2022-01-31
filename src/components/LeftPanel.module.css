@@ -1,7 +1,8 @@
 .clearBtn{
-  background-color: rgb(100 155 21);
-  color: white;
+  /* background-color: rgb(100 155 21);
+  color: white; */
   border-radius: 25px;
+  cursor: pointer;
   width: 110px;
   height: 25px;
 }

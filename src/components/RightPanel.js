@@ -1,12 +1,26 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import classes from "./RightPanel.module.css";
 
 const RightPanel = (props) => {
-  const [width, setWidth] = useState();
-  const [height, setHeight] = useState();
-  const [radius, setRadius] = useState();
+  const [text, setText] = useState(props.text);
+  const [width, setWidth] = useState(props.dimensions.width);
+  const [height, setHeight] = useState(props.dimensions.height);
+  const [radius, setRadius] = useState(props.dimensions.radius);
   const [color, setColor] = useState();
-  
+  useEffect(()=>{
+    setText(props.text);
+  },[props.text]);
+  useEffect(()=>{
+    setWidth(props.dimensions.width);
+    setHeight(props.dimensions.height);
+    setRadius(props.dimensions.radius);
+  },[props.dimensions]);
+
+  const changeText = (event) => {
+    const value = event.target.value;
+     setText(value);
+    props.changeText( value);
+  };
   const changeColor = (event) =>{
     const value = event.target.value;
     setColor(value);
@@ -23,6 +37,7 @@ const RightPanel = (props) => {
     setRadius(event.target.value);
   };
   const apply = (event) => {
+    
     event.preventDefault();
     const dim = {
       width: width,
@@ -31,9 +46,12 @@ const RightPanel = (props) => {
     };
     props.changeDimensions(dim);
   };
+  
   return (
     <Fragment>
       <h2>Properties</h2> <br/>
+      <h3> Change Text</h3>
+      <input type="text" value={text} onChange={changeText} />
       <h3>Change Color:</h3>
       <div className={classes.colorsGrid}>
         <input type="color" value={color} onChange={changeColor}></input>
