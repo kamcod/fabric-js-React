@@ -8,7 +8,7 @@ import RightPanel from "./components/RightPanel";
 
 function App() {
   const [canvas, setCanvas] = useState('');
-
+  
   useEffect(() => {
     setCanvas(initCanvas('canvas'));
   }, []);
@@ -58,25 +58,10 @@ function App() {
 
   //////////////// Right Panel Controls //////////
 
-const colorRed = () => {
+const changeColor = (value) => {
   const aObj = canvas.getActiveObject();
-  aObj.set('fill', 'red');
-  canvas.renderAll();
-};
-const colorBlue = () => {
-  const aObj = canvas.getActiveObject();
-  aObj.set('fill', 'blue');
-  canvas.renderAll();
-};
-const colorPink = () => {
-  const aObj = canvas.getActiveObject();
-  aObj.set('fill', 'pink');
-  canvas.renderAll();
-};
-const colorPurple = () => {
-  const aObj = canvas.getActiveObject();
-  console.log(aObj);
-  aObj.set('fill', 'purple');
+  console.log(value);
+  aObj.set('fill', value);
   canvas.renderAll();
 };
 const changeDimensions = (value) => {
@@ -88,21 +73,47 @@ const changeDimensions = (value) => {
   if(value.radius){aObj.set('radius', parseFloat(value.radius));}
   canvas.renderAll();
 }
+const addImage = () => {
+   fabric.Image.fromURL('https://www.ineedamobile.com/wp-content/uploads/2019/03/iphone-x-600x598.png', img => {
+    img.scale(0.5).set('flipX', true);
+    canvas.add(img);
+  });
+  canvas.renderAll();
+};
+const addImg = (url) => {
+  console.log(url);
+  fabric.Image.fromURL(url, img => {
+    img.scale(0.5).set('flipX', true);
+    canvas.add(img);
+  });
+  canvas.renderAll();
+};
+
+const clearCanvas =()=>{
+  const objs = canvas.getObjects();
+  objs.forEach(e => {
+    canvas.remove(e);
+  });
+};
   return (
     <div className="App">
       <div className="leftpanel">
-        <LeftPanel addRect={addRect} addCircle={addCircle} addTriangle={addTriangle}/>
+        <LeftPanel
+        addRect={addRect}
+        addCircle={addCircle}
+        addTriangle={addTriangle}
+        addImage={addImage}
+        addImg={addImg}
+        clearCanvas={clearCanvas}
+        />
         
       </div>
       <div className="canvas-view">
         <Canvas />
       </div>
       <div className="rightpanel">
-        <RightPanel 
-        colorRed={colorRed}
-        colorBlue={colorBlue}
-        colorPink={colorPink}
-        colorPurple={colorPurple}
+        <RightPanel
+        changeColor={changeColor}
         changeDimensions={changeDimensions}
         />
       </div>

@@ -5,17 +5,12 @@ const RightPanel = (props) => {
   const [width, setWidth] = useState();
   const [height, setHeight] = useState();
   const [radius, setRadius] = useState();
-  const colorRed = () =>{
-    props.colorRed();
-  };
-  const colorBlue = () =>{
-    props.colorBlue();
-  };
-  const colorPink = () =>{
-    props.colorPink();
-  };
-  const colorPurple = () =>{
-    props.colorPurple();
+  const [color, setColor] = useState();
+  
+  const changeColor = (event) =>{
+    const value = event.target.value;
+    setColor(value);
+    props.changeColor(value);
   };
 
   const changeWidth = (event) =>{
@@ -41,12 +36,10 @@ const RightPanel = (props) => {
       <h2>Properties</h2> <br/>
       <h3>Change Color:</h3>
       <div className={classes.colorsGrid}>
-        <button onClick={colorRed}>red</button>
-        <button onClick={colorBlue}>blue</button>
-        <button onClick={colorPink}>pink</button>
-        <button onClick={colorPurple}>purple</button>
+        <input type="color" value={color} onChange={changeColor}></input>
       </div>
       <br/>
+      <hr width="90%"></hr>
       <h3>Dimensions</h3>
       <form className={classes.dimensions} onSubmit={apply}>
         <b>width</b> <input type="number" value={width} onChange={changeWidth} /> <br /> <br/>
