@@ -4,3 +4,12 @@
 .dimensions input{
   width: 70px;
 }
+.clearBtn{
+  float: right;
+  margin-right: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+
+}

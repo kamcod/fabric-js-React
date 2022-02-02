@@ -11,6 +11,10 @@ const LeftPanel = (props) => {
     {name: 'Yahama', url: 'https://global.yamaha-motor.com/business/img/pic_001.jpg'},
     {name: 'BMW X5', url: 'https://cdni.autocarindia.com/Utils/ImageResizer.ashx?n=http://cms.haymarketindia.net/model/uploads/modelimages/X5ModelImage.jpg&w=730&h=484&q=75&c=1'}
   ];
+  const svgImages = [
+    {name: 'instagram', url: 'http://localhost:3000/insta.svg'},
+    {name: 'react', url: 'http://localhost:3000/react.svg'}
+  ];
   
   const addRect = () => {
     props.addRect();
@@ -30,18 +34,12 @@ const LeftPanel = (props) => {
   const addImg = (url) =>{
     props.addImg(url);
   };
-  const addSvg = () =>{
-    props.addSvg();
+  const addSvg = (url) =>{
+    props.addSvg(url);
   };
 
   ///////
-  const clearCanvas = () => {
-    props.clearCanvas();
-  };
-
-  // const check = () =>{
-  //   console.log(props.canvas.getObjects());
-  // };
+  
   
   
   return(
@@ -60,10 +58,13 @@ const LeftPanel = (props) => {
         return (<li onClick={()=> addImg(item.url)}>{item.name}</li> );
       })}
       </ul>
-      <button onClick={addSvg} > Add SVG</button>
-      {/* <button onClick={check} >check</button> */}
-      <br/> <br/><br/> <br/>
-      <button className={classes.clearBtn} onClick={clearCanvas}>Clear Canvas</button> <br/> <br/>
+      <h4><u>Add SVG images from list</u></h4>
+      <ul className={classes.imgList}>
+      {svgImages.map(item => {
+        return (<li onClick={()=> addSvg(item.url)}>{item.name}</li> );
+      })}
+      </ul>
+      <br/> <br/>
     </Fragment>
   );
 };

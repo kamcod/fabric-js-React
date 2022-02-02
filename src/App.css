@@ -8,6 +8,7 @@
   width: 60%;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
+  overflow: hidden;
 }
 .leftpanel{
   width: 19%;

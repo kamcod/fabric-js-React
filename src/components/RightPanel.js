@@ -46,9 +46,15 @@ const RightPanel = (props) => {
     };
     props.changeDimensions(dim);
   };
+
+  const clearCanvas = () =>{
+    props.clearCanvas();
+  };
   
   return (
     <Fragment>
+      <br/><br/>
+      <button disabled={props.objects.length >0 ? false : true} className={classes.clearBtn} onClick={clearCanvas}>Clear Canvas</button> <br/>
       <h2>Properties</h2> <br/>
       <h3> Change Text</h3>
       <input type="text" value={text} onChange={changeText} />
