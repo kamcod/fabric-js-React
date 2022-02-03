@@ -7,9 +7,20 @@
 .clearBtn{
   float: right;
   margin-right: 10px;
+  border: 1px solid lightgray;
     border-radius: 25px;
     cursor: pointer;
     width: 100px;
     height: 25px;
-
+}
+.downloadBtn{
+  color: white;
+  border: 1px solid darkolivegreen;
+  background-color: yellowgreen;
+  float: right;
+  margin-right: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 82px;
+    height: 40px;
 }

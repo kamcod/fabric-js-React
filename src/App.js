@@ -1,4 +1,5 @@
 import "./App.css";
+import json from './json.json';
 import Canvas from "./components/Canvas";
 import { fabric } from "fabric";
 
@@ -15,18 +16,33 @@ function App() {
   useEffect(() => {
     const tempCanvas = initCanvas('canvas');
     if(tempCanvas){
-      setCanvas(tempCanvas);
-      // tempCanvas.on('selection:created', function(event) {
-      //   console.log("selection created");
-      //   event.target.set('fill', 'red');
-      //   tempCanvas.renderAll();
-      // });
-      tempCanvas.on('object:added', function() {
-        console.log("new object added");
-        // objs.push(1);
+      
+      console.log(json);
+      tempCanvas.loadFromJSON(json, function() {
+        tempCanvas.renderAll();
         setObjs([1,...objs]);
-        console.log(objs.length);
-        console.log("push happened");
+        setCanvas(tempCanvas);
+     },function(o, object){ 
+       
+       if(object.type ==='triangle' || object.type ==='rect' || object.type ==='circle'){
+        object.set('fill', 'red');
+       }
+        }); 
+      
+      tempCanvas.on('object:added', function(o) {
+        console.log("new object added");
+        console.log(o.target.setControlsVisibility({
+          bl: true,
+          br: true,
+          mb: false,
+          ml: false,
+          mr: false,
+          mt: false,
+          tl: true,
+          tr: true,
+          mtr: true,
+        }));
+        setObjs([1,...objs]);
       });
     }
     
@@ -38,6 +54,7 @@ function App() {
     width: 800,
     backgroundColor: '#897ebd'
   });
+  
 }
 
 ////////// left panel controls ///////////////
@@ -69,7 +86,8 @@ function App() {
         radius: 50,
         fill: 'yellow',
         left: 120,
-         top: 120
+         top: 120,
+         //lockSkewingX: true
       });
       circle.on('selected', ()=>{
         circle.set('stroke', 'black');
@@ -189,6 +207,17 @@ const clearCanvas =()=>{
   });
   setObjs([]);
 };
+
+const download = () => {
+const url = canvas.toDataURL();
+console.log(url);
+const link = document.createElement("a");
+  link.download = "canvas.png";
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
   return (
     <div className="App">
       <div className="leftpanel">
@@ -216,6 +245,7 @@ const clearCanvas =()=>{
         changeText={changeText}
         clearCanvas={clearCanvas}
         objects={objs}
+        download={download}
         />
       </div>
     </div>

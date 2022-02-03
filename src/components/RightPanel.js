@@ -50,14 +50,18 @@ const RightPanel = (props) => {
   const clearCanvas = () =>{
     props.clearCanvas();
   };
-  
+
+  const download = () =>{
+    console.log("downloading...");
+    props.download();
+  };
   return (
     <Fragment>
       <br/><br/>
       <button disabled={props.objects.length >0 ? false : true} className={classes.clearBtn} onClick={clearCanvas}>Clear Canvas</button> <br/>
       <h2>Properties</h2> <br/>
       <h3> Change Text</h3>
-      <input type="text" value={text} onChange={changeText} />
+      <input type="text" value={props.objects.length >0 ? text: ''} onChange={changeText} />
       <h3>Change Color:</h3>
       <div className={classes.colorsGrid}>
         <input type="color" value={color} onChange={changeColor}></input>
@@ -66,10 +70,12 @@ const RightPanel = (props) => {
       <hr width="90%"></hr>
       <h3>Dimensions</h3>
       <form className={classes.dimensions} onSubmit={apply}>
-        <b>width</b> <input type="number" value={width} onChange={changeWidth} /> <br /> <br/>
-        <b>height</b> <input type="number" value={height} onChange={changeHeight} ></input> <br /> <br/>
-        <b>radius</b> <input type="number" value={radius} onChange={changeRadius} ></input> <br /> <br/>
+        <b>width</b> <input type="number" value={props.objects.length >0 ? width: ''} onChange={changeWidth} /> <br /> <br/>
+        <b>height</b> <input type="number" value={props.objects.length >0 ? height: ''} onChange={changeHeight} ></input> <br /> <br/>
+        <b>radius</b> <input type="number" value={props.objects.length >0 ? radius: ''} onChange={changeRadius} ></input> <br /> <br/>
         <button type="submit">Apply</button>
+        <br/><br/>
+        <button className={classes.downloadBtn} type="button" onClick={download}>Download Canvas</button>
       </form>
     </Fragment>
   );
