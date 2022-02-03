@@ -1,8 +1,9 @@
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import classes from './LeftPanel.module.css';
 
 const LeftPanel = (props) => {
+  const [drawing, setDrawing] = useState(false);
 
   const images = [
     {name: 'iphone', url: 'https://www.ineedamobile.com/wp-content/uploads/2019/03/iphone-x-600x598.png'},
@@ -37,6 +38,10 @@ const LeftPanel = (props) => {
   const addSvg = (url) =>{
     props.addSvg(url);
   };
+  const toggleDraw = () =>{
+    setDrawing(!drawing);
+    props.toggleDraw(!drawing);
+  };
 
   ///////
   
@@ -45,6 +50,7 @@ const LeftPanel = (props) => {
   return(
     <Fragment>
       <h2>Sidebar</h2>
+      <button className={classes.drawBtn} onClick={toggleDraw}> {drawing ? 'Off' : 'On'} Drawing Mode</button>
       <h4><u>Add Shapes</u></h4>
       <button onClick={addRect}>Add Rectangle</button>
       <button onClick={addCircle}>Add Circle</button> 

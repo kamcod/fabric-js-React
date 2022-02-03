@@ -1,4 +1,8 @@
-
+.drawBtn{
+  width: 90px;
+    border: 1px solid gray;
+    border-radius: 20px;
+}
 .imgList{
   list-style-type: none;
   text-decoration: none;

@@ -6,7 +6,8 @@ const RightPanel = (props) => {
   const [width, setWidth] = useState(props.dimensions.width);
   const [height, setHeight] = useState(props.dimensions.height);
   const [radius, setRadius] = useState(props.dimensions.radius);
-  const [color, setColor] = useState();
+  const [fillColor, setFillColor] = useState();
+  const [strokeColor, setStrokeColor] = useState();
   useEffect(()=>{
     setText(props.text);
   },[props.text]);
@@ -21,10 +22,15 @@ const RightPanel = (props) => {
      setText(value);
     props.changeText( value);
   };
-  const changeColor = (event) =>{
+  const changeFill = (event) =>{
     const value = event.target.value;
-    setColor(value);
-    props.changeColor(value);
+    setFillColor(value);
+    props.changeFill(value);
+  };
+  const changeStroke = (event) =>{
+    const value = event.target.value;
+    setStrokeColor(value);
+    props.changeStroke(value);
   };
 
   const changeWidth = (event) =>{
@@ -64,7 +70,10 @@ const RightPanel = (props) => {
       <input type="text" value={props.objects.length >0 ? text: ''} onChange={changeText} />
       <h3>Change Color:</h3>
       <div className={classes.colorsGrid}>
-        <input type="color" value={color} onChange={changeColor}></input>
+        <label htmlFor="fill">Fill:</label>
+        <input type="color" id="fill" value={fillColor} onChange={changeFill}></input> <br/> <br />
+        <label htmlFor="fill">Stroke:</label>
+        <input type="color" id="fill" value={strokeColor} onChange={changeStroke}></input>
       </div>
       <br/>
       <hr width="90%"></hr>

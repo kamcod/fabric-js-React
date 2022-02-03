@@ -1,5 +1,5 @@
 import "./App.css";
-import json from './json.json';
+// import json from './json.json';
 import Canvas from "./components/Canvas";
 import { fabric } from "fabric";
 
@@ -17,18 +17,18 @@ function App() {
     const tempCanvas = initCanvas('canvas');
     if(tempCanvas){
       
-      console.log(json);
-      tempCanvas.loadFromJSON(json, function() {
-        tempCanvas.renderAll();
-        setObjs([1,...objs]);
-        setCanvas(tempCanvas);
-     },function(o, object){ 
-       
-       if(object.type ==='triangle' || object.type ==='rect' || object.type ==='circle'){
-        object.set('fill', 'red');
-       }
-        }); 
       
+    //   console.log(json);
+    //   tempCanvas.loadFromJSON(json, function() {
+    //     tempCanvas.renderAll();
+    //     setObjs([1,...objs]);
+    //  },function(o, object){ 
+       
+    //    if(object.type ==='triangle' || object.type ==='rect' || object.type ==='circle'){
+    //     object.set('fill', 'red');
+    //    }
+    //     }); 
+    setCanvas(tempCanvas);
       tempCanvas.on('object:added', function(o) {
         console.log("new object added");
         console.log(o.target.setControlsVisibility({
@@ -42,6 +42,7 @@ function App() {
           tr: true,
           mtr: true,
         }));
+        
         setObjs([1,...objs]);
       });
     }
@@ -58,6 +59,12 @@ function App() {
 }
 
 ////////// left panel controls ///////////////
+const toggleDraw = (value) =>{
+  console.log('drawing mode' + value);
+  console.log(typeof value)
+  canvas.isDrawingMode = value;
+    canvas.renderAll();
+};
   const addRect = () => {
     console.log(objs);
     console.log("add rect")
@@ -124,10 +131,16 @@ function App() {
 
   //////////////// Right Panel Controls //////////
 
-const changeColor = (value) => {
+const changeFill = (value) => {
   const aObj = canvas.getActiveObject();
   console.log(value);
   aObj.set('fill', value);
+  canvas.renderAll();
+};
+const changeStroke = (value) => {
+  const aObj = canvas.getActiveObject();
+  console.log(value);
+  aObj.set('stroke', value);
   canvas.renderAll();
 };
 const changeDimensions = (value) => {
@@ -229,6 +242,7 @@ const link = document.createElement("a");
         addImg={addImg}
         addText={addText}
         addSvg={addSvg}
+        toggleDraw={toggleDraw}
         />
         
       </div>
@@ -238,7 +252,8 @@ const link = document.createElement("a");
       <div className="rightpanel">
         <RightPanel
         canvas={canvas}
-        changeColor={changeColor}
+        changeFill={changeFill}
+        changeStroke={changeStroke}
         changeDimensions={changeDimensions}
         dimensions = {dimensions}
         text={text.text}
