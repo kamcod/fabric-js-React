@@ -8,6 +8,7 @@ const RightPanel = (props) => {
   const [radius, setRadius] = useState(props.dimensions.radius);
   const [fillColor, setFillColor] = useState();
   const [strokeColor, setStrokeColor] = useState();
+  const [strokeSize, setStrokeSize] = useState();
   useEffect(()=>{
     setText(props.text);
   },[props.text]);
@@ -32,6 +33,11 @@ const RightPanel = (props) => {
     setStrokeColor(value);
     props.changeStroke(value);
   };
+  const changeStrokeSize = (event) =>{
+    const value = event.target.value;
+    setStrokeSize(value);
+    props.changeStrokeSize(value);
+  };
 
   const changeWidth = (event) =>{
     setWidth(event.target.value);
@@ -53,27 +59,19 @@ const RightPanel = (props) => {
     props.changeDimensions(dim);
   };
 
-  const clearCanvas = () =>{
-    props.clearCanvas();
-  };
-
-  const download = () =>{
-    console.log("downloading...");
-    props.download();
-  };
   return (
     <Fragment>
-      <br/><br/>
-      <button disabled={props.objects.length >0 ? false : true} className={classes.clearBtn} onClick={clearCanvas}>Clear Canvas</button> <br/>
-      <h2>Properties</h2> <br/>
       <h3> Change Text</h3>
       <input type="text" value={props.objects.length >0 ? text: ''} onChange={changeText} />
       <h3>Change Color:</h3>
       <div className={classes.colorsGrid}>
-        <label htmlFor="fill">Fill:</label>
+        <label htmlFor="fill"><b>Fill:</b> </label>
         <input type="color" id="fill" value={fillColor} onChange={changeFill}></input> <br/> <br />
-        <label htmlFor="fill">Stroke:</label>
-        <input type="color" id="fill" value={strokeColor} onChange={changeStroke}></input>
+        <label htmlFor="stroke"><b>Stroke:</b> </label>
+        <input type="color" id="stroke" value={strokeColor} onChange={changeStroke}></input>  <br/> <br />
+        <label htmlFor="sSize"><b>Stroke Size:</b> </label>
+        <input type="number" className={classes.stroke} id="sSize" value={strokeSize} onChange={changeStrokeSize}></input>
+
       </div>
       <br/>
       <hr width="90%"></hr>
@@ -83,8 +81,7 @@ const RightPanel = (props) => {
         <b>height</b> <input type="number" value={props.objects.length >0 ? height: ''} onChange={changeHeight} ></input> <br /> <br/>
         <b>radius</b> <input type="number" value={props.objects.length >0 ? radius: ''} onChange={changeRadius} ></input> <br /> <br/>
         <button type="submit">Apply</button>
-        <br/><br/>
-        <button className={classes.downloadBtn} type="button" onClick={download}>Download Canvas</button>
+        
       </form>
     </Fragment>
   );

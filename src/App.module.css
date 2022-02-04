@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.canvasView{
+  padding: 10px 0;
+  box-sizing: border-box;
+  width: 60%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.leftpanel{
+  padding: 10px;
+  box-sizing: border-box;
+  width: 19%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: block;
+}
+.rightpanel{
+  padding: 10px;
+  box-sizing: border-box;
+  width: 19%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.26);
+  border-radius: 8px;
+  display: block;
+}
+.clearBtn{
+  float: right;
+  margin-right: 10px;
+  border: 1px solid lightgray;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+}
+.tabs{
+  display: flex;
+  width: 69%;
+    margin: 0 auto;
+    justify-content: center;
+    padding-bottom: 2px;
+  border-bottom: 1px solid rgb(125, 148, 125);
+}
+.tabs button{
+  background-color: rgb(224, 240, 224);
+  border: none;
+  border-radius: 5px;
+  width: 80px;
+}
+.active{
+  border: 1px solid rgb(96, 121, 44) !important;
+  background-color: rgb(167, 244, 126) !important;
+}
+.downloadBtn{
+  color: white;
+  border: 1px solid darkolivegreen;
+  background-color: yellowgreen;
+  float: right;
+  margin-right: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 82px;
+    height: 40px;
+}

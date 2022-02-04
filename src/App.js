@@ -1,4 +1,4 @@
-import "./App.css";
+import classes from "./App.module.css";
 // import json from './json.json';
 import Canvas from "./components/Canvas";
 import { fabric } from "fabric";
@@ -6,12 +6,16 @@ import { fabric } from "fabric";
 import { useState, useEffect } from "react";
 import LeftPanel from "./components/LeftPanel";
 import RightPanel from "./components/RightPanel";
+import Layers from "./components/Layers";
 
 function App() {
   const [canvas, setCanvas] = useState('');
   const [text, setText] = useState('');
   const [dimensions, setDimensions] = useState('');
   const [objs, setObjs] = useState([]);
+  const [objData, setObjData] = useState([]);
+  const [layerPressed, setLayerPressed] = useState(true);
+  const [propPressed, setPropPressed] = useState(false);
  
   useEffect(() => {
     const tempCanvas = initCanvas('canvas');
@@ -43,7 +47,8 @@ function App() {
           mtr: true,
         }));
         
-        setObjs([1,...objs]);
+        setObjs([o.target,...objs]);
+        
       });
     }
     
@@ -59,6 +64,14 @@ function App() {
 }
 
 ////////// left panel controls ///////////////
+const layerActive = () =>{
+  setLayerPressed(true);
+  setPropPressed(false);
+};
+const propActive = () =>{
+  setPropPressed(true);
+  setLayerPressed(false);
+};
 const toggleDraw = (value) =>{
   console.log('drawing mode' + value);
   console.log(typeof value)
@@ -66,7 +79,6 @@ const toggleDraw = (value) =>{
     canvas.renderAll();
 };
   const addRect = () => {
-    console.log(objs);
     console.log("add rect")
       const rect = new fabric.Rect({
         width: 100,
@@ -83,6 +95,12 @@ const toggleDraw = (value) =>{
       const dim = {width: rect.width, height: rect.height, radius: ''};
       setDimensions(dim);
       canvas.add(rect);
+      const data = {
+        type: 'rectangle',
+        width: rect.width,
+        height: rect.height
+      };
+      setObjData([data, ...objData]);
       canvas.renderAll();
  
  
@@ -106,6 +124,12 @@ const toggleDraw = (value) =>{
       const dim = {height: '', width: '', radius: circle.radius};
       setDimensions(dim);
       canvas.add(circle);
+      const data = {
+        type: 'circle',
+        width: circle.width,
+        height: circle.height
+      };
+      setObjData([data, ...objData]);
       canvas.renderAll();
   };
   const addTriangle = () => {
@@ -126,6 +150,12 @@ const toggleDraw = (value) =>{
       const dim = {width: tri.width, height: tri.height, radius: ''};
       setDimensions(dim);
       canvas.add(tri);
+      const data = {
+        type: 'triangle',
+        width: tri.width,
+        height: tri.height
+      };
+      setObjData([data, ...objData]);
       canvas.renderAll();
   };
 
@@ -141,6 +171,12 @@ const changeStroke = (value) => {
   const aObj = canvas.getActiveObject();
   console.log(value);
   aObj.set('stroke', value);
+  canvas.renderAll();
+};
+const changeStrokeSize = (value) => {
+  const aObj = canvas.getActiveObject();
+  console.log(value);
+  aObj.set('strokeWidth', parseFloat(value));
   canvas.renderAll();
 };
 const changeDimensions = (value) => {
@@ -164,7 +200,13 @@ const addImage = () => {
       img.set('stroke', '');
     });
     canvas.add(img);
-  });
+    const data = {
+      type: 'image',
+      width: img.width,
+      height: img.height
+    };
+    setObjData([data, ...objData]);
+  }, {crossOrigin: 'anonymous'});
   canvas.renderAll();
 };
 const addImg = (url) => {
@@ -179,6 +221,12 @@ const addImg = (url) => {
       img.set('stroke', '');
     });
     canvas.setActiveObject(img);
+    const data = {
+      type: 'image',
+      width: img.width,
+      height: img.height
+    };
+    setObjData([data, ...objData]);
   });
   canvas.renderAll();
 };
@@ -189,6 +237,12 @@ const addText = () => {
     setText(text.text);
   })
   canvas.add(text);
+  const data = {
+    type: 'text',
+    width: text.width,
+    height: text.height
+  };
+  setObjData([data, ...objData]);
   canvas.setActiveObject(text);
   setText(text);
   const dim = {width: text.width, height: text.height, radius: ''};
@@ -208,6 +262,12 @@ const addSvg = (url) => {
     const obj = fabric.util.groupSVGElements(objects, option);
     obj.scale(0.5);
    canvas.add(obj);
+   const data = {
+    type: 'svg',
+    width: obj.width,
+    height: obj.height
+  };
+  setObjData([data, ...objData]);
    canvas.renderAll();
 
 });
@@ -231,9 +291,13 @@ const link = document.createElement("a");
   link.click();
   document.body.removeChild(link);
 };
+const test =() =>{
+  console.log(objData);
+};
   return (
-    <div className="App">
-      <div className="leftpanel">
+    <div className={classes.App}>
+      {/* <button onClick={test}>Check</button> */}
+      <div className={classes.leftpanel}>
         <LeftPanel
         addRect={addRect}
         addCircle={addCircle}
@@ -246,22 +310,34 @@ const link = document.createElement("a");
         />
         
       </div>
-      <div className="canvas-view">
+      <div className={classes.canvasView}>
         <Canvas />
       </div>
-      <div className="rightpanel">
-        <RightPanel
+      <div className={classes.rightpanel}>
+      <br/>
+      <button disabled={objs.length >0 ? false : true} className={classes.clearBtn} onClick={clearCanvas}>Clear Canvas</button> <br/>
+      <br/> <br/>
+      <div className={classes.tabs}>
+        <button className={layerPressed ? classes.active : ''} onClick={layerActive}>Layer</button>
+        <button className={propPressed ? classes.active : ''} onClick={propActive}>Properties</button>
+      </div>
+        {layerPressed && <Layers
+        data = {objData}
+        />}
+        { propPressed && <RightPanel
         canvas={canvas}
         changeFill={changeFill}
         changeStroke={changeStroke}
+        changeStrokeSize={changeStrokeSize}
         changeDimensions={changeDimensions}
         dimensions = {dimensions}
         text={text.text}
         changeText={changeText}
-        clearCanvas={clearCanvas}
         objects={objs}
         download={download}
-        />
+        />}
+        <br/><br/>
+        <button className={classes.downloadBtn} type="button" onClick={download}>Download Canvas</button>
       </div>
     </div>
   );
