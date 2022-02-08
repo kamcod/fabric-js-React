@@ -39,7 +39,7 @@
 }
 .tabs{
   display: flex;
-  width: 69%;
+  width: 85%;
     margin: 0 auto;
     justify-content: center;
     padding-bottom: 2px;
@@ -55,6 +55,7 @@
   border: 1px solid rgb(96, 121, 44) !important;
   background-color: rgb(167, 244, 126) !important;
 }
+
 .downloadBtn{
   color: white;
   border: 1px solid darkolivegreen;

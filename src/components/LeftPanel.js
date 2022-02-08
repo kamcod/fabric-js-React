@@ -32,6 +32,9 @@ const LeftPanel = (props) => {
   const addText = () => {
     props.addText();
   };
+  const addTextBox = () => {
+    props.addTextBox();
+  };
   const addImg = (url) =>{
     props.addImg(url);
   };
@@ -58,6 +61,7 @@ const LeftPanel = (props) => {
       <button onClick={addImage}>Add Image</button>
       <br/><br/>
       <button onClick={addText} >Add Text</button>
+      <button onClick={addTextBox} >Add Text Box</button>
       <h4><u>Add images from list</u></h4>
       <ul className={classes.imgList}>
       {images.map(item => {

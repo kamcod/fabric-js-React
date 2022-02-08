@@ -18,6 +18,10 @@ const RightPanel = (props) => {
     setRadius(props.dimensions.radius);
   },[props.dimensions]);
 
+  const changeFontFamily = (event) =>{
+    const value= event.target.value;
+    props.changeFontFamily( value);
+  };
   const changeText = (event) => {
     const value = event.target.value;
      setText(value);
@@ -63,7 +67,15 @@ const RightPanel = (props) => {
     <Fragment>
       <h3> Change Text</h3>
       <input type="text" value={props.objects.length >0 ? text: ''} onChange={changeText} />
-      <h3>Change Color:</h3>
+      <br/><br/>
+      <label htmlFor="family"><b>Font Family</b> </label>
+      <select id="family" onChange={changeFontFamily} className={classes.dropWidth}>
+        <option value="Times New Roman"> Times New Roman</option>
+        <option value="sans-serif"> sans-serif</option>
+        <option value="'Supermercado One', cursive"> 'Supermercado One', cursive</option>
+        <option value="'Festive', cursive"> 'Festive', cursive</option>
+      </select>
+      <br/><br/>
       <div className={classes.colorsGrid}>
         <label htmlFor="fill"><b>Fill:</b> </label>
         <input type="color" id="fill" value={fillColor} onChange={changeFill}></input> <br/> <br />
