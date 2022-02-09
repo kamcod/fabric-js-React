@@ -73,7 +73,7 @@ const RightPanel = (props) => {
         <option value="Times New Roman"> Times New Roman</option>
         <option value="sans-serif"> sans-serif</option>
         <option value="'Supermercado One', cursive"> 'Supermercado One', cursive</option>
-        <option value="'Festive', cursive"> 'Festive', cursive</option>
+        <option value="Quintessential"> Quintessential</option>
       </select>
       <br/><br/>
       <div className={classes.colorsGrid}>
